@@ -1,4 +1,13 @@
-import {makeHairstyle, moveUser, upgradeUserLaptop, UserType, UserWithLaptopType} from "./10_01";
+import {
+    addNewBooksToUser,
+    makeHairstyle,
+    moveUser,
+    moveUserToOtherHouse,
+    upgradeUserLaptop,
+    UserType,
+    UserWithBooksType,
+    UserWithLaptopType
+} from "./10_01";
 
 test.skip('reference type test', () => {
     let user: UserType = {
@@ -40,7 +49,7 @@ test.skip('change address', () => {
 })
 
 
-test('upgrade laptop to macbook', () => {
+test.skip('upgrade laptop to macbook', () => {
     let user: UserWithLaptopType = {
         name: "Dimych",
         hair: 32,
@@ -62,3 +71,50 @@ test('upgrade laptop to macbook', () => {
     expect(user.laptop.title).toBe('ZenBook')
 })
 
+test.skip('change number of house', () => {
+    let user: UserWithLaptopType & UserWithBooksType = {
+        name: "Dimych",
+        hair: 32,
+        address: {
+            city: "Minsk",
+            house: 12
+        },
+        laptop: {
+            title: "ZenBook"
+        },
+        books: ['css', 'html','js','react']
+    }
+
+    const userCopy = moveUserToOtherHouse(user, 99);
+
+    expect(user).not.toBe(userCopy)
+    expect(user.books).toBe(userCopy.books)
+    expect(user.address).not.toBe(userCopy.address)
+    expect(user.laptop).toBe(userCopy.laptop)
+    expect(userCopy.address.house).toBe(99)
+})
+
+
+test('change books', () => {
+    let user: UserWithLaptopType & UserWithBooksType = {
+        name: "Dimych",
+        hair: 32,
+        address: {
+            city: "Minsk",
+            house: 12
+        },
+        laptop: {
+            title: "ZenBook"
+        },
+        books: ['css', 'html', 'js', 'react']
+    }
+
+    const userCopy = addNewBooksToUser(user, 'ts');
+
+    expect(user).not.toBe(userCopy)
+    expect(user.books).not.toBe(userCopy.books)
+    expect(user.address).toBe(userCopy.address)
+    expect(user.laptop).toBe(userCopy.laptop)
+    expect(userCopy.books[4]).toBe('ts')
+    expect(userCopy.books.length).toBe(5)
+})
