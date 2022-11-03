@@ -44,3 +44,11 @@ export function updateBook(u: UserWithLaptopType & UserWithBooksType, oldbook: s
     //return {...u,books:[...u.books.slice(2),newBooks]}
     return {...u, books: u.books.map(b => b === oldbook ? newBook: b)}
 }
+
+export function removeBook(u: UserWithLaptopType & UserWithBooksType, bookForDelete: string) {
+    return {...u, books: u.books.filter(b => b !== bookForDelete )}
+}
+
+
+
+
