@@ -2,10 +2,10 @@ import {
     addNewBooksToUser,
     makeHairstyle,
     moveUser,
-    moveUserToOtherHouse, removeBook, updateBook,
+    moveUserToOtherHouse, removeBook, updateBook, updateCompanyTitle,
     upgradeUserLaptop,
     UserType,
-    UserWithBooksType,
+    UserWithBooksType, UserWithCompaniesType,
     UserWithLaptopType
 } from "./10_01";
 
@@ -143,7 +143,7 @@ test.skip('update js to ts', () => {
     expect(userCopy.books[2]).toBe('ts')
 })
 
-test('remove js book', () => {
+test.skip('remove js book', () => {
     let user: UserWithLaptopType & UserWithBooksType = {
         name: "Dimych",
         hair: 32,
@@ -164,4 +164,28 @@ test('remove js book', () => {
     expect(user.address).toBe(userCopy.address)
     expect(user.laptop).toBe(userCopy.laptop)
     expect(userCopy.books[2]).toBe('react')
+})
+
+
+test('remove js book', () => {
+    let user: UserWithLaptopType & UserWithCompaniesType = {
+        name: "Dimych",
+        hair: 32,
+        address: {
+            city: "Minsk",
+            house: 12
+        },
+        laptop: {
+            title: "ZenBook"
+        },
+        companies:[{id: 1, title:"Епам"},{id:2,title:"IT-Incubator"}]
+    }
+
+    const userCopy = updateCompanyTitle(user, 1 ,"EPAM");
+
+    expect(user).not.toBe(userCopy)
+    expect(user.address).toBe(userCopy.address)
+    expect(user.laptop).toBe(userCopy.laptop)
+    expect(user.companies).not.toBe(userCopy.companies)
+    expect(userCopy.companies[0].title).toBe("EPAM")
 })
