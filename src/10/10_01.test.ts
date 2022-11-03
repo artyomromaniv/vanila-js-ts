@@ -2,7 +2,7 @@ import {
     addNewBooksToUser,
     makeHairstyle,
     moveUser,
-    moveUserToOtherHouse,
+    moveUserToOtherHouse, updateBook,
     upgradeUserLaptop,
     UserType,
     UserWithBooksType,
@@ -95,7 +95,7 @@ test.skip('change number of house', () => {
 })
 
 
-test('change books', () => {
+test.skip('change books', () => {
     let user: UserWithLaptopType & UserWithBooksType = {
         name: "Dimych",
         hair: 32,
@@ -117,4 +117,28 @@ test('change books', () => {
     expect(user.laptop).toBe(userCopy.laptop)
     expect(userCopy.books[4]).toBe('ts')
     expect(userCopy.books.length).toBe(5)
+})
+
+
+test('update js to ts', () => {
+    let user: UserWithLaptopType & UserWithBooksType = {
+        name: "Dimych",
+        hair: 32,
+        address: {
+            city: "Minsk",
+            house: 12
+        },
+        laptop: {
+            title: "ZenBook"
+        },
+        books: ['css', 'html', 'js', 'react']
+    }
+
+    const userCopy = updateBook(user,'js','ts');
+
+    expect(user).not.toBe(userCopy)
+    expect(user.books).not.toBe(userCopy.books)
+    expect(user.address).toBe(userCopy.address)
+    expect(user.laptop).toBe(userCopy.laptop)
+    expect(userCopy.books[2]).toBe('ts')
 })

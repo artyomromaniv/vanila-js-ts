@@ -28,8 +28,8 @@ export function moveUser(u: UserWithLaptopType, city: string) {
     return {...u, address: {...u.address, city: city}}
 }
 
-export function upgradeUserLaptop(u:UserWithLaptopType,title:string){
-    return {...u,laptop: {...u.laptop, title:title}}
+export function upgradeUserLaptop(u: UserWithLaptopType, title: string) {
+    return {...u, laptop: {...u.laptop, title: title}}
 }
 
 export function moveUserToOtherHouse(u: UserWithLaptopType & UserWithBooksType, house: number) {
@@ -37,5 +37,10 @@ export function moveUserToOtherHouse(u: UserWithLaptopType & UserWithBooksType, 
 }
 
 export function addNewBooksToUser(u: UserWithLaptopType & UserWithBooksType, newBooks: string) {
-    return {...u,books:[...u.books, newBooks]}
+    return {...u, books: [...u.books, newBooks]}
+}
+
+export function updateBook(u: UserWithLaptopType & UserWithBooksType, oldbook: string, newBook: string) {
+    //return {...u,books:[...u.books.slice(2),newBooks]}
+    return {...u, books: u.books.map(b => b === oldbook ? newBook: b)}
 }
